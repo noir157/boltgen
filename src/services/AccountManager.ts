@@ -16,14 +16,15 @@ export class AccountManager {
   private baseUrl: string;
 
   constructor() {
-    this.baseUrl = import.meta.env.VITE_API_URL || 'http://localhost:3001';
+    // Usar a URL do Railway aqui
+    this.baseUrl = import.meta.env.VITE_API_URL || 'https://seu-app.railway.app';
   }
 
   async createAndConfirmAccount(): Promise<AccountResponse> {
     try {
       log('Sending request to create account...');
       const response = await axios.post<AccountResponse>(`${this.baseUrl}/api/create-account`);
-
+      
       if (response.data.success && response.data.accountInfo) {
         log('Account created successfully!', 'success');
         return response.data;
@@ -39,7 +40,7 @@ export class AccountManager {
       };
     }
   }
-
+  
   async checkServerStatus(): Promise<boolean> {
     try {
       const response = await axios.get(`${this.baseUrl}/api/status`);
